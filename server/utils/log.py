@@ -9,8 +9,16 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
+def mask_sensitive_data(message):
+    sensitive_keywords = ["secret_key", "password", "access_key"]
+    for keyword in sensitive_keywords:
+        if keyword in message:
+            message = message.replace(keyword, "****")
+    return message
+
 def output_log(message, level):
     global logger
+    message = mask_sensitive_data(message)
     if level.lower() == "warning":
         logger.warning(message)
     elif level.lower() == "error":
