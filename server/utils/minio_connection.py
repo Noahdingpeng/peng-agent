@@ -9,8 +9,9 @@ class MinioStorage:
         self.entrypoint = config.s3_url
         self.access_key = config.s3_access_key
         self.secret_key = config.s3_secret_key
+        masked_secret_key = self.secret_key[:4] + "****" + self.secret_key[-4:]
         output_log(
-            f"Minio connection to {self.entrypoint} with {self.access_key} and {self.secret_key}",
+            f"Minio connection to {self.entrypoint} with {self.access_key} and {masked_secret_key}",
             "debug",
         )
         self.client = Minio(
